@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AndroidProject</string>
+    <string name="date">date</string>
+    <string name="released">Released:</string>
+    <string name="movietitle">movieTitle</string>
+    <string name="movie_trailer">MOVIE TRAILER</string>
+</resources>
