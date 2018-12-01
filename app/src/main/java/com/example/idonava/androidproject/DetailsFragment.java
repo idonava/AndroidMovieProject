@@ -49,8 +49,9 @@ public class DetailsFragment extends Fragment {
         movieTitle = rootView.findViewById(R.id.movieTitle);
         date = rootView.findViewById(R.id.date);
         overviewText = rootView.findViewById(R.id.overviewText);
-        imageBig.setImageResource(movieModel.getBackgroundImage());
+        imageBig.setImageResource(movieModel.getMainImage());
         imageSmall.setImageResource(movieModel.getMainImage());
+        imageBig.setScaleType(ImageView.ScaleType.CENTER_CROP);
         movieTitle.setText(movieModel.getMovieTitle());
         date.setText(movieModel.getDate());
         overviewText.setText(movieModel.getOverview());
