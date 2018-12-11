@@ -7,7 +7,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.example.idonava.androidproject.menu_activity.AsyncTaskActivity;
+import com.example.idonava.androidproject.menu_activity.CounterFragment;
 
 import java.util.ArrayList;
 
@@ -26,6 +32,30 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.taskActivity:
+              //  AsyncTaskActivity ata = new AsyncTaskActivity();
+                Intent i=new Intent(this,AsyncTaskActivity.class);
+                startActivity(i);
+                break;
+
+            case R.id.threadHandlerActivity:
+                Toast.makeText(this, "soon", Toast.LENGTH_SHORT).show();
+                break;
+
+        }
+
+        return false;
+    }
 
     private void initRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.movies_list);
