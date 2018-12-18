@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.idonava.androidproject.menu_activity.AsyncTaskActivity;
 import com.example.idonava.androidproject.menu_activity.CounterFragment;
+import com.example.idonava.androidproject.menu_activity.ThreadActivity;
 
 import java.util.ArrayList;
 
@@ -41,15 +42,17 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i;
         switch (item.getItemId()) {
             case R.id.taskActivity:
-              //  AsyncTaskActivity ata = new AsyncTaskActivity();
-                Intent i=new Intent(this,AsyncTaskActivity.class);
+                //  AsyncTaskActivity ata = new AsyncTaskActivity();
+                i = new Intent(this, AsyncTaskActivity.class);
                 startActivity(i);
                 break;
 
             case R.id.threadHandlerActivity:
-                Toast.makeText(this, "soon", Toast.LENGTH_SHORT).show();
+                i = new Intent(this, ThreadActivity.class);
+                startActivity(i);
                 break;
 
         }

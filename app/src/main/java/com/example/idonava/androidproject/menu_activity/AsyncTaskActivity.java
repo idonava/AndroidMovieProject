@@ -21,16 +21,34 @@ public class AsyncTaskActivity extends AppCompatActivity implements IAsyncTaskEv
         setContentView(R.layout.activity_async_task);
         mFragmentManager = getSupportFragmentManager();//Get Fragment Manager
         if (mThreadsFragment == null) {
-            mThreadsFragment = new CounterFragment();//Get Fragment Instance
-            Bundle data = new Bundle();//Use bundle to pass data
-            data.putString(CounterFragment.FRAGMENT_TYPE, getString(R.string.async_task_activity));//put string, int, etc in bundle with a key value
-            mThreadsFragment.setArguments(data);//Finally set argument bundle to fragment
+            mThreadsFragment = CounterFragment.newInstance(getString(R.string.async_task_activity));
             mFragmentManager.beginTransaction().replace(R.id.fragment, mThreadsFragment).commit();//now replace the argument fragment
         }
     }
 
     @Override
+    protected void onSaveInstanceState(final Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Save the state of item position
+        //  outState.putInt(SELECTED_ITEM_POSITION, mPosition);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        // Read the state of item position
+        //    mPosition = savedInstanceState.gettInt(SELECTED_ITEM_POSITION);
+    }
+
+    @Override
     protected void onDestroy() {
+        if (mAsyncTask != null) {
+            mAsyncTask.cancel(true);
+            mAsyncTask = null;
+
+        }
         super.onDestroy();
     }
 
@@ -44,6 +62,7 @@ public class AsyncTaskActivity extends AppCompatActivity implements IAsyncTaskEv
         Toast.makeText(this, getString(R.string.msg_postexecute), Toast.LENGTH_SHORT).show();
         mThreadsFragment.updateFragmentText(getString(R.string.done));
         mAsyncTask = null;
+
     }
 
     @Override

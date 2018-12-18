@@ -5,7 +5,7 @@ public interface IAsyncTaskEvents {
     void startAsyncTask();
     void cancelAsyncTask();
 
-    void onPreExecute() throws InterruptedException;
+    void onPreExecute();
     void onPostExecute();
     void onProgressUpdate(Integer integer);
     void onCancel();

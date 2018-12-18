@@ -29,6 +29,15 @@ public class CounterFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    public static CounterFragment newInstance(String framgentType)
+    {
+        CounterFragment counterFragment = new CounterFragment();//Get Fragment Instance
+        Bundle data = new Bundle();//Use bundle to pass data
+        data.putString(CounterFragment.FRAGMENT_TYPE, framgentType);//put string, int, etc in bundle with a key value
+        counterFragment.setArguments(data);//Finally set argument bundle to fragment
+        return counterFragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_counter, container, false);

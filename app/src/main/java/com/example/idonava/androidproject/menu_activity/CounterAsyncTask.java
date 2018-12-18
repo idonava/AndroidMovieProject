@@ -10,6 +10,7 @@ public class CounterAsyncTask extends AsyncTask<Integer, Integer, Void> {
     public CounterAsyncTask(IAsyncTaskEvents iAsyncTaskEvents) {
         mIAsyncTaskEvents = iAsyncTaskEvents;
     }
+
     @Override
     protected Void doInBackground(Integer... integers) {
         int length = 0;
@@ -33,12 +34,11 @@ public class CounterAsyncTask extends AsyncTask<Integer, Integer, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        System.out.println("onPreExecute!!!!!");
+
         if (mIAsyncTaskEvents != null) {
-            try {
-                mIAsyncTaskEvents.onPreExecute();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            mIAsyncTaskEvents.onPreExecute();
+
         }
     }
 
@@ -47,6 +47,7 @@ public class CounterAsyncTask extends AsyncTask<Integer, Integer, Void> {
         super.onPostExecute(result);
         if (mIAsyncTaskEvents != null) {
             mIAsyncTaskEvents.onPostExecute();
+            System.out.println("OnPostExecute!!!!!");
         }
     }
 
@@ -57,5 +58,4 @@ public class CounterAsyncTask extends AsyncTask<Integer, Integer, Void> {
             mIAsyncTaskEvents.onProgressUpdate(values[0]);
         }
     }
-
 }
