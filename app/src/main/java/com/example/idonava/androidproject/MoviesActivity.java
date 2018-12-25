@@ -12,8 +12,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.idonava.androidproject.Networking.VideosListResult;
 import com.example.idonava.androidproject.menu_activity.AsyncTaskActivity;
-import com.example.idonava.androidproject.menu_activity.CounterFragment;
+import com.example.idonava.androidproject.Background.BGServiceActivity;
 import com.example.idonava.androidproject.menu_activity.ThreadActivity;
 
 import java.util.ArrayList;
@@ -54,6 +55,10 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
                 i = new Intent(this, ThreadActivity.class);
                 startActivity(i);
                 break;
+            case R.id.BGServiceActivity:
+                i = new Intent(this, BGServiceActivity.class);
+                startActivity(i);
+                break;
 
         }
 
@@ -69,6 +74,8 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
     }
 
     private void initMovies() {
+        VideosListResult vlr = new VideosListResult();
+
         movies = MovieContent.MOVIES;
 
         MovieModel movie1 = new MovieModel();
