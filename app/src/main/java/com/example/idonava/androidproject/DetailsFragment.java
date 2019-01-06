@@ -1,24 +1,32 @@
 package com.example.idonava.androidproject;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import org.w3c.dom.Text;
 
 public class DetailsFragment extends Fragment {
-     static String EXTRA_ITEM_POSITION = "itemPosition";
+    static String EXTRA_ITEM_POSITION = "itemPosition";
     MovieModel movieModel;
     ImageView imageBig;
     ImageView imageSmall;
     TextView movieTitle;
     TextView date;
     TextView overviewText;
+    Button trailerButton;
 
     public static DetailsFragment newInstance(int position) {
         DetailsFragment detailsFragment = new DetailsFragment();
@@ -49,12 +57,35 @@ public class DetailsFragment extends Fragment {
         movieTitle = rootView.findViewById(R.id.movieTitle);
         date = rootView.findViewById(R.id.date);
         overviewText = rootView.findViewById(R.id.overviewText);
-        imageBig.setImageResource(movieModel.getMainImage());
-        imageSmall.setImageResource(movieModel.getMainImage());
-        imageBig.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        trailerButton = rootView.findViewById(R.id.trailerButton);
+//        imageBig.setImageResource(movieModel.getMainImage());
+//        imageSmall.setImageResource(movieModel.getMainImage());
+//        imageBig.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        if (!TextUtils.isEmpty(movieModel.getPosterPath())) {
+            imageBig.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            RequestCreator a = Picasso.get()
+                    .load(movieModel.getPosterPath());
+            a.into(imageSmall);
+            a.into(imageBig);
+
+        }
         movieTitle.setText(movieModel.getMovieTitle());
         date.setText(movieModel.getDate());
         overviewText.setText(movieModel.getOverview());
+
+        trailerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTrailer(v);
+            }
+        });
         return rootView;
+    }
+
+    public void openTrailer(View view) {
+        String trailerUrl = movieModel.getTrailerUrl();
+        System.out.println(trailerUrl);
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(trailerUrl));
+        startActivity(browserIntent);
     }
 }

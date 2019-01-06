@@ -22,8 +22,9 @@
             android:name=".DetailsSlidePagerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
-            android:name=".menu_activity.AsyncTaskActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize" />
+            android:name=".menu_activity.AsyncTaskActivity"/>
+            <!--android:configChanges="orientation|keyboardHidden|screenSize" />-->
+
         <activity android:name=".menu_activity.ThreadActivity" />
         <activity android:name=".Background.BGServiceActivity" />
 

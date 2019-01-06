@@ -6,31 +6,44 @@ import android.os.Parcelable;
 public class MovieModel implements Parcelable {
     int mainImage;
     int backgroundImage;
+    int id;
     String movieTitle;
     String date;
     String overview;
     String trailerUrl;
-
+    String posterPath;
+    private static final String urlImagePath="http://image.tmdb.org/t/p/w185/";
     public MovieModel() {
 
     }
 
-    public MovieModel(int mainImage, int backgroundImage, String movieTitle, String date, String overview, String trailerUrl) {
-        this.mainImage = mainImage;
-        this.backgroundImage = backgroundImage;
-        this.movieTitle = movieTitle;
-        this.date = date;
-        this.overview = overview;
-        this.trailerUrl = trailerUrl;
-    }
 
     protected MovieModel(Parcel in) {
         mainImage = in.readInt();
         backgroundImage = in.readInt();
+        id = in.readInt();
         movieTitle = in.readString();
         date = in.readString();
         overview = in.readString();
         trailerUrl = in.readString();
+        posterPath = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mainImage);
+        dest.writeInt(backgroundImage);
+        dest.writeInt(id);
+        dest.writeString(movieTitle);
+        dest.writeString(date);
+        dest.writeString(overview);
+        dest.writeString(trailerUrl);
+        dest.writeString(posterPath);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<MovieModel> CREATOR = new Creator<MovieModel>() {
@@ -44,6 +57,14 @@ public class MovieModel implements Parcelable {
             return new MovieModel[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getMainImage() {
         return mainImage;
@@ -63,6 +84,14 @@ public class MovieModel implements Parcelable {
 
     public String getMovieTitle() {
         return movieTitle;
+    }
+
+    public String getPosterPath() {
+        return urlImagePath+posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 
     public void setMovieTitle(String movieTitle) {
@@ -91,21 +120,6 @@ public class MovieModel implements Parcelable {
 
     public void setTrailerUrl(String trailerUrl) {
         this.trailerUrl = trailerUrl;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(mainImage);
-        dest.writeInt(backgroundImage);
-        dest.writeString(movieTitle);
-        dest.writeString(date);
-        dest.writeString(overview);
-        dest.writeString(trailerUrl);
     }
 
     @Override

@@ -3,11 +3,14 @@ package com.example.idonava.androidproject;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,7 @@ public class MoviesViewAdapter extends  RecyclerView.Adapter<MoviesViewAdapter.V
     @Override
     public void onBindViewHolder(@NonNull MoviesViewAdapter.ViewHolder holder, int position) {
         holder.onBindViewHolder(mDataSource.get(position));
+
     }
 
     @Override
@@ -58,9 +62,15 @@ public class MoviesViewAdapter extends  RecyclerView.Adapter<MoviesViewAdapter.V
         }
 
         public void onBindViewHolder(MovieModel movieModel) {
-            ivImage.setImageResource(movieModel.getMainImage());
+           // ivImage.setImageResource(movieModel.getMainImage());
             tvTitle.setText(movieModel.getMovieTitle());
             tvOverview.setText(movieModel.getOverview());
+            System.out.println("[ido] "+movieModel.getPosterPath());
+            if (!TextUtils.isEmpty(movieModel.getPosterPath())){
+                Picasso.get()
+                        .load(movieModel.getPosterPath())
+                        .into(ivImage);
+            }
         }
 
         @Override
