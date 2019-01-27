@@ -1,18 +1,25 @@
 package com.example.idonava.androidproject;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Objects;
+
+@Entity
 public class MovieModel implements Parcelable {
     int mainImage;
     int backgroundImage;
+    @PrimaryKey
     int id;
+    double popularity;
     String movieTitle;
     String date;
     String overview;
     String trailerUrl;
     String posterPath;
-    private static final String urlImagePath="http://image.tmdb.org/t/p/w185/";
+    public static final String urlImagePath="http://image.tmdb.org/t/p/w185/";
     public MovieModel() {
 
     }
@@ -22,6 +29,7 @@ public class MovieModel implements Parcelable {
         mainImage = in.readInt();
         backgroundImage = in.readInt();
         id = in.readInt();
+        popularity = in.readDouble();
         movieTitle = in.readString();
         date = in.readString();
         overview = in.readString();
@@ -34,6 +42,7 @@ public class MovieModel implements Parcelable {
         dest.writeInt(mainImage);
         dest.writeInt(backgroundImage);
         dest.writeInt(id);
+        dest.writeDouble(popularity);
         dest.writeString(movieTitle);
         dest.writeString(date);
         dest.writeString(overview);
@@ -57,6 +66,14 @@ public class MovieModel implements Parcelable {
             return new MovieModel[size];
         }
     };
+
+    public double getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(double popularity) {
+        this.popularity = popularity;
+    }
 
     public int getId() {
         return id;
@@ -87,7 +104,7 @@ public class MovieModel implements Parcelable {
     }
 
     public String getPosterPath() {
-        return urlImagePath+posterPath;
+        return posterPath;
     }
 
     public void setPosterPath(String posterPath) {
@@ -132,5 +149,19 @@ public class MovieModel implements Parcelable {
                 ", overview='" + overview + '\'' +
                 ", trailerUrl='" + trailerUrl + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MovieModel)) return false;
+        MovieModel that = (MovieModel) o;
+        return getId() == that.getId();
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId());
     }
 }

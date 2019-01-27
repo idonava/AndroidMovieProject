@@ -10,7 +10,9 @@ public class MovieContent {
     }
 
     public static void addMovie(MovieModel mv) {
-        MOVIES.add(mv);
+        if (!MOVIES.contains(mv)){
+            MOVIES.add(mv);
+        }
     }
 }
 

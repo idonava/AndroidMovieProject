@@ -63,8 +63,9 @@ public class DetailsFragment extends Fragment {
 //        imageBig.setScaleType(ImageView.ScaleType.CENTER_CROP);
         if (!TextUtils.isEmpty(movieModel.getPosterPath())) {
             imageBig.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        System.out.println("[ido] MENI : " + MovieModel.urlImagePath + movieModel.getPosterPath());
             RequestCreator a = Picasso.get()
-                    .load(movieModel.getPosterPath());
+                    .load(MovieModel.urlImagePath + movieModel.getPosterPath());
             a.into(imageSmall);
             a.into(imageBig);
 

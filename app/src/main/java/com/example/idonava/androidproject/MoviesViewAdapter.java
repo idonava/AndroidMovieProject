@@ -68,7 +68,7 @@ public class MoviesViewAdapter extends  RecyclerView.Adapter<MoviesViewAdapter.V
             System.out.println("[ido] "+movieModel.getPosterPath());
             if (!TextUtils.isEmpty(movieModel.getPosterPath())){
                 Picasso.get()
-                        .load(movieModel.getPosterPath())
+                        .load(MovieModel.urlImagePath + movieModel.getPosterPath())
                         .into(ivImage);
             }
         }

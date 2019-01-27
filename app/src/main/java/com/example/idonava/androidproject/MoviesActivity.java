@@ -1,5 +1,6 @@
 package com.example.idonava.androidproject;
 
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.example.idonava.androidproject.Networking.Result;
 import com.example.idonava.androidproject.Networking.ResultsItem;
 import com.example.idonava.androidproject.Networking.TrailerRespone;
 import com.example.idonava.androidproject.Networking.VideosListResult;
+import com.example.idonava.androidproject.Persistency.AppDatabase;
 import com.example.idonava.androidproject.menu_activity.AsyncTaskActivity;
 import com.example.idonava.androidproject.Background.BGServiceActivity;
 import com.example.idonava.androidproject.menu_activity.ThreadActivity;
@@ -32,15 +34,22 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
     RecyclerView recyclerView;
     MoviesViewAdapter movieAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<MovieModel> movies;
-
+    private List<MovieModel> movies;
+   private  AppDatabase appDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
+        appDatabase =  AppDatabase.getInstance(this);
         initMovies();
 //        initRecyclerView();
 
+    }
+
+    public void setData(List<MovieModel> items) {
+        movies.clear();
+        movies.addAll(items);
+        movieAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -83,14 +92,18 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
     }
 
     private void initMovies() {
-        movies = MovieContent.MOVIES;
+        appDatabase.getMovieModelDao().deleteAll();
+        movies = appDatabase.getMovieModelDao().getAll();
+        if (movies==null || movies.isEmpty()){
+             movies = MovieContent.MOVIES;
+        }
 
         Call<VideosListResult> call = RestClient.moviesService.getPopularMovies();
-
         call.enqueue(new Callback<VideosListResult>() {
             @Override
             public void onResponse(Call<VideosListResult> call, Response<VideosListResult> response) {
                 if (response.isSuccessful()) {
+                    System.out.println(call.request());
                     System.out.println();
                     List<Result> a = response.body().getResults();
                     for (Result result : a) {
@@ -100,7 +113,9 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
                         mm.setDate(result.getReleaseDate());
                         mm.setOverview(result.getOverview());
                         mm.setId(result.getId());
+                        mm.setPopularity(result.getPopularity());
                         MovieContent.addMovie(mm);
+                        appDatabase.getMovieModelDao().insertAll(mm);
                         final Call<TrailerRespone> callTrailer = RestClient.moviesService.getTrailer(mm.getId());
                      callTrailer.enqueue(new Callback<TrailerRespone>() {
                          @Override
@@ -114,17 +129,14 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
                             }
 
                          }
-
                          @Override
                          public void onFailure(Call<TrailerRespone> call, Throwable t) {
-
                          }
                      });
-
                     }
                     initRecyclerView();
                 }
-
+          
             }
 
             @Override
@@ -132,6 +144,7 @@ public class MoviesActivity extends AppCompatActivity implements OnMovieClickLis
                 System.out.println(2);
             }
         });
+        System.out.println(call.isExecuted() +" - "+ call.request());
         VideosListResult vlr = new VideosListResult();
     }
 
