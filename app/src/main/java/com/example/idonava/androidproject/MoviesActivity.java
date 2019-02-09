@@ -1,11 +1,7 @@
 package com.example.idonava.androidproject;
 
-import android.arch.persistence.room.Room;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -13,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.idonava.androidproject.Background.BGServiceActivity;
 import com.example.idonava.androidproject.Networking.RestClient;
 import com.example.idonava.androidproject.Networking.Result;
 import com.example.idonava.androidproject.Networking.ResultsItem;
@@ -20,12 +17,13 @@ import com.example.idonava.androidproject.Networking.TrailerRespone;
 import com.example.idonava.androidproject.Networking.VideosListResult;
 import com.example.idonava.androidproject.Persistency.AppDatabase;
 import com.example.idonava.androidproject.menu_activity.AsyncTaskActivity;
-import com.example.idonava.androidproject.Background.BGServiceActivity;
 import com.example.idonava.androidproject.menu_activity.ThreadActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -3,10 +3,7 @@ package com.example.idonava.androidproject.Background;
 import android.app.IntentService;
 import android.content.Intent;
 import android.os.SystemClock;
-import android.support.annotation.Nullable;
-
-import com.example.idonava.androidproject.Background.BGServiceActivity;
-import com.example.idonava.androidproject.R;
+import androidx.annotation.Nullable;
 
 
 public class HardJobIntentService extends IntentService {

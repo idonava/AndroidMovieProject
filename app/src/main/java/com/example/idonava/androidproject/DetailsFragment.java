@@ -3,20 +3,20 @@ package com.example.idonava.androidproject;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.idonava.androidproject.DownloadService.DownloadActivity;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.RequestCreator;
-
-import org.w3c.dom.Text;
 
 public class DetailsFragment extends Fragment {
     static String EXTRA_ITEM_POSITION = "itemPosition";
@@ -27,7 +27,7 @@ public class DetailsFragment extends Fragment {
     TextView date;
     TextView overviewText;
     Button trailerButton;
-
+    ImageButton downloadButton;
     public static DetailsFragment newInstance(int position) {
         DetailsFragment detailsFragment = new DetailsFragment();
         Bundle bundle = new Bundle();
@@ -44,6 +44,9 @@ public class DetailsFragment extends Fragment {
             movieModel = MovieContent.MOVIES.get(itemPosition);
         }
     }
+    public void downloadOnClick(View view) {
+        DownloadActivity.startActivity(getContext(), movieModel);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,9 +61,7 @@ public class DetailsFragment extends Fragment {
         date = rootView.findViewById(R.id.date);
         overviewText = rootView.findViewById(R.id.overviewText);
         trailerButton = rootView.findViewById(R.id.trailerButton);
-//        imageBig.setImageResource(movieModel.getMainImage());
-//        imageSmall.setImageResource(movieModel.getMainImage());
-//        imageBig.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        downloadButton=rootView.findViewById(R.id.downloadButton);
         if (!TextUtils.isEmpty(movieModel.getPosterPath())) {
             imageBig.setScaleType(ImageView.ScaleType.CENTER_CROP);
         System.out.println("[ido] MENI : " + MovieModel.urlImagePath + movieModel.getPosterPath());
@@ -80,6 +81,8 @@ public class DetailsFragment extends Fragment {
                 openTrailer(v);
             }
         });
+        downloadButton.setOnClickListener((v) -> downloadOnClick(v));
+
         return rootView;
     }
 

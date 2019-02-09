@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.idonava.androidproject">
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -21,9 +23,8 @@
         <activity
             android:name=".DetailsSlidePagerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
-        <activity
-            android:name=".menu_activity.AsyncTaskActivity"/>
-            <!--android:configChanges="orientation|keyboardHidden|screenSize" />-->
+        <activity android:name=".menu_activity.AsyncTaskActivity" />
+        <!-- android:configChanges="orientation|keyboardHidden|screenSize" /> -->
 
         <activity android:name=".menu_activity.ThreadActivity" />
         <activity android:name=".Background.BGServiceActivity" />
@@ -33,7 +34,10 @@
             android:exported="false" />
         <service
             android:name=".Background.HardJobService"
-            android:exported="false"></service>
+            android:exported="false" />
+        <service android:name=".DownloadService.DownloadService"/>
+
+        <activity android:name=".DownloadService.DownloadActivity"></activity>
     </application>
 
 </manifest>

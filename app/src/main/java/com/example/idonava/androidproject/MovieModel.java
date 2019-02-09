@@ -1,11 +1,12 @@
 package com.example.idonava.androidproject;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Objects;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 @Entity
 public class MovieModel implements Parcelable {
@@ -105,6 +106,9 @@ public class MovieModel implements Parcelable {
 
     public String getPosterPath() {
         return posterPath;
+    }
+    public String getPosterPathUri() {
+        return urlImagePath+posterPath;
     }
 
     public void setPosterPath(String posterPath) {
